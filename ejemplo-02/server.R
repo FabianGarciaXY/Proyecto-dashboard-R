@@ -3,12 +3,11 @@ library(ggplot2)
 library(plotly)
 function(input, output) {
   
-setwd("C:/users/fvelazquez/downloads/archive (3)")
-data <- read.csv("pelis.csv")
-data <- na.omit(data) # Para evitar problemas por NA
-dfCols <- select(data, Release,Distributor, WorldSales)
-dfCols <- dfCols[order(dfCols$Release, dfCols$Distributor), ]
-dfFinal <-  rename(dfCols, Lanzamiento = Release, Estudio = Distributor, Ganancias = WorldSales)
+data <- read.csv("https://raw.githubusercontent.com/FabianGarciaXY/Proyecto-dashboard-R/main/data/BEDU_movies_csv.csv")
+data <- na.omit(data)
+dfCols <- select(data, Release.Year,Distributor, World.Sales..in...)
+dfCols <- dfCols[order(dfCols$Release.Year, dfCols$Distributor), ]
+dfFinal <-  rename(dfCols, Lanzamiento = Release.Year, Estudio = Distributor, Ganancias = World.Sales..in...)
 
 output$mi_grafico <- renderPlotly({
   if (input$TipoGrafica == "gm") {
