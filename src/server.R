@@ -26,6 +26,27 @@ function(input, output) {
   dfFinal <- mutate(dfFinal, GananciasLocal=as.numeric(gsub('[$,]', '', GananciasLocales)))
 
   # Grafica 1: Fabian  
+  output$mi_grafico_1 <- renderPlotly({
+
+    if (input$TipoGrafica == "gm") {
+      yLabel = dfFinal$Ganancias
+    } else if (input$TipoGrafica == "gi") {
+      yLabel = dfFinal$GananciasInternacional
+    } else {
+      yLabel = dfFinal$GananciasLocal
+    }
+
+    # Grafico de barras
+    ggplot(data=dfFinal, aes(x=Licencia, y=yLabel)) +
+      geom_bar(stat="identity", width=0.6, fill=rgb(0.1,0.4,0.5,0.7)) +
+      theme(legend.position="none") +
+      theme_minimal()
+
+  })
+
+
+  # Grafico 2: Moises
+
 
 
   # Grafica 3: Fede

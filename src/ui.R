@@ -3,11 +3,22 @@ library(shinyWidgets)
 library(shinydashboard)
 library(shinydashboardPlus)
 library(plotly)
-data <- read.csv("https://raw.githubusercontent.com/FabianGarciaXY/Proyecto-dashboard-R/main/src/data/BEDU_movies_csv.csv")
+library(dplyr)
+
+
+url <- "https://raw.githubusercontent.com/FabianGarciaXY/Proyecto-dashboard-R/main/src/data/BEDU_movies_csv.csv"
+data <- read.csv(url)
 data <- na.omit(data)
-dfCols <- select(data, Release.Year,Distributor, World.Sales..in...)
-dfCols <- dfCols[order(dfCols$Release.Year, dfCols$Distributor), ]
-dfFinal <-  rename(dfCols, Lanzamiento = Release.Year, Estudio = Distributor, Ganancias = World.Sales..in...)
+dfCols <- select(data, Release.Year, Distributor, World.Sales..in..., International.Sales..in..., Domestic.Sales..in..., License) # Seleccion de columnas
+dfCols <- dfCols[order(dfCols$Release.Year, dfCols$Distributor),]
+dfFinal <-  rename(dfCols,     # Renombrando columnas
+              Lanzamiento = Release.Year, 
+              Estudio = Distributor, 
+              Ganancias = World.Sales..in...,
+              GananciasInternacionales = International.Sales..in...,
+              GananciasLocales = Domestic.Sales..in...,
+              Licencia = License
+            )
 
 
 # Header 
@@ -44,21 +55,26 @@ body<- dashboardBody(
     br()
   ),
   tabItems(
-    # Primer tab
+    # Primer tab: Fabian
     tabItem(tabName = "Grafico1",
             fluidRow(
               #contenedor principal
               box(title = "Caso 1: ¿Cuál es la clasificación que genera más dinero?",
-                  h3("Primer Grafico"),
-                  p("Este primer grafico nos muestra los datos de la pregunta 1"),
+                  h3("Grafico de Barras"),
+                  p("Para averiguarlo se graficaron las ganacias que genero cada tipo categoria(PG, PG-13, R)"),
                   width = 12,
                   #Controles
-                  box(dateRangeInput('dateRange',
-                                      label = 'Selecciona el rango de fechas',
-                                      start = "1937-01-01", end = "2022-01-01",
-                                      min = "1937-01-01", max = "2022-12-31")),
+                  box(selectInput(inputId = "TipoGrafica",
+                                  label = "Seleccione que se va a Graficar:",
+                                  choices = c("Ganancias Mundiales" = "gm",
+                                              "Ganancias Internacionales" = "gi",
+                                              "Ganancias Nacionales" = "gn"),
+                                  selectize = FALSE),
+                      width = 4),
                   #Grafica 1 
-                  box(plotOutput(outputId = ""))
+                  box(plotlyOutput("mi_grafico_1"),
+                      width = 8,
+                      height = "400px")
               )#Box principal
             )#FluidRow
     ), #TabItem
@@ -80,7 +96,7 @@ body<- dashboardBody(
             )#FluidRow
     ), #TabItem
     
-    # Tercer tab
+    # Tercer tab: Fede
     tabItem(tabName = "Grafico3",
             fluidRow(
               #contenedor principal
