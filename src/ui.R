@@ -3,7 +3,7 @@ library(shinyWidgets)
 library(shinydashboard)
 library(shinydashboardPlus)
 library(plotly)
-data <- read.csv("https://raw.githubusercontent.com/FabianGarciaXY/Proyecto-dashboard-R/main/data/BEDU_movies_csv.csv")
+data <- read.csv("https://raw.githubusercontent.com/FabianGarciaXY/Proyecto-dashboard-R/main/src/data/BEDU_movies_csv.csv")
 data <- na.omit(data)
 dfCols <- select(data, Release.Year,Distributor, World.Sales..in...)
 dfCols <- dfCols[order(dfCols$Release.Year, dfCols$Distributor), ]
