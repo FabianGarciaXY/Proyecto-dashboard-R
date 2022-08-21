@@ -124,7 +124,7 @@ body<- dashboardBody(
             
                   width = 12,
                   #Controles
-                  box(selectInput(inputId = "TipoGrafica",
+                  box(selectInput(inputId = "TipoGrafica3",
                                   label = "Seleccione que se va a Graficar:",
                                   choices = c("Ganancias Mundiales" = "gm",
                                               "Cantidad de Peliculas" = "cp"),
