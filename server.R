@@ -78,7 +78,7 @@ function(input, output) {
 
   # Grafica 3: Fede
   output$mi_grafico <- renderPlotly({
-    if (input$TipoGrafica == "gm") {
+    if (input$TipoGrafica3 == "gm") {
         lines_data <-  subset(dfFinal, 
                               Lanzamiento >= input$Anio[1] & 
                               Lanzamiento <= input$Anio[2])
