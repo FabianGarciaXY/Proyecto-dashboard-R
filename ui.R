@@ -82,7 +82,19 @@ body<- dashboardBody(
                   box(plotlyOutput("mi_grafico_1"),
                       width = 8,
                       height = "400px"),
-                  p("Por lo que se puede notar que la tendencia es hacia las peliculas PG-13 por lo que la hipotesis se rechaza")
+                  p("Por lo que se puede notar que la tendencia es hacia las peliculas PG-13 por lo que la hipotesis se rechaza"),
+
+                  # Grafica 2  
+                  box(plotlyOutput("mi_grafico_1.2"),
+                      width = 8,
+                      height = "400px"),
+                  # Controles 2
+                  box(selectInput(inputId = "TipoGrafica1.2",
+                                  label = "Seleccione el nivel geografico",
+                                  choices = c("Ganancias Mundiales" = "gm",
+                                              "Ganancias Internacionales" = "gi",
+                                              "Ganancias Nacionales" = "gn"),
+                                  selectize = FALSE), width = 3)
       
               )#Box principal
             )#FluidRow

@@ -36,19 +36,36 @@ function(input, output) {
   output$mi_grafico_1 <- renderPlotly({
 
     if (input$TipoGrafica == "gm") {
-      yLabel = dfFinal$Ganancias
+      myLabel = dfFinal$Ganancias
     } else if (input$TipoGrafica == "gi") {
-      yLabel = dfFinal$GananciasInternacional
+      myLabel = dfFinal$GananciasInternacional
     } else {
-      yLabel = dfFinal$GananciasLocal
+      myLabel = dfFinal$GananciasLocal
     }
 
     # Grafico de barras
-    ggplot(data=dfFinal, aes(x=Licencia, y=yLabel)) +
-      geom_bar(stat="identity", width=0.6, fill=rgb(0.1,0.4,0.5,0.7)) +
+    ggplot(data=dfFinal, aes(x=Licencia, y=myLabel)) +
+      geom_bar(stat="identity", width=0.9, fill="#FC4E07") +
       theme(legend.position="none") +
-      theme_minimal()
+      theme_minimal() +
+      ylab("Ganancias") + 
+      xlab("Genero")
+  })
 
+  # Grafico 1.2: Fabian
+  output$mi_grafico_1.2 <- renderPlotly({
+    
+    lines_data <- subset(dfFinal, Lanzamiento >= 1980 & Lanzamiento <=2023 )
+    
+    if (input$TipoGrafica2 == "gm") {
+      ggplot(lines_data, aes(x=Lanzamiento, y=Ganancias, fill=Licencia)) +
+        geom_col()
+    } else if (input$TipoGrafica1.2 == "gi") {
+      ggplot(lines_data, aes(x=Lanzamiento, y=GananciasInternacional, fill=Licencia)) +
+        geom_col()    
+    } else {
+      ggplot(lines_data, aes(x=Lanzamiento, y=GananciasLocal, fill=Licencia)) +
+        geom_col()        }
   })
 
 
